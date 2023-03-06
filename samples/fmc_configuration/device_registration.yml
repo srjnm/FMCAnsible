@@ -7,13 +7,6 @@
       cisco.fmcansible.fmc_configuration:
         operation: getAllDomain
         register_as: domain
-
-    - name: Find an intrustion policy
-      cisco.fmcansible.fmc_configuration:
-        operation: getAllIntrusionPolicy
-        path_params:
-          domainUUID: '{{ domain[0].uuid }}'
-        register_as: policies
     
     - name: Create an Access Policy
       cisco.fmcansible.fmc_configuration:
@@ -22,9 +15,6 @@
           name: test
           defaultAction:
             action: PERMIT
-            intrusionPolicy:
-              id: "{{ policies[0].id }}"
-              type: "{{ policies[0].type }}"
             type: defaultAction
           type: AccessPolicy
         path_params:
